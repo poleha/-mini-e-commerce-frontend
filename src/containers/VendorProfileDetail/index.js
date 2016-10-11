@@ -58,12 +58,17 @@ export default class VendorProfileDetail extends BaseComponent {
 
 
   loadMoreProductsClick(e) {
-    this.props.productActions.loadProducts({limit: this.props.product.products.ids.length + 30})
+      let params = {}
+      params['user__vendor_profile'] = this.props.params.id;
+      params['limit'] = this.props.product.products.ids.length + 10;
+    this.props.productActions.loadProducts(params)
 
   }
 
   refreshProductsClick(e) {
-    this.props.productActions.loadProducts()
+      let params = {}
+      params['user__vendor_profile'] = this.props.params.id;
+    this.props.productActions.loadProducts(params)
 
   }
 
@@ -94,7 +99,8 @@ export default class VendorProfileDetail extends BaseComponent {
 
                 return (
                 <div key={elem.id}>
-                { elem.title }
+                <div>Product: { elem.title }</div>
+                <div>Price: { elem.price }</div>
                 </div>    
                 )
 
@@ -103,6 +109,26 @@ export default class VendorProfileDetail extends BaseComponent {
         return productsBlock;
     }
 
+
+  filterFormInputChange(fieldName, e) {
+      let params = {}
+      params[fieldName] = e.target.value;
+      params['user__vendor_profile'] = this.props.params.id;
+      this.props.productActions.loadProducts(params)
+  }
+
+    getFilterForm() {
+        return (
+            <div>
+                <form>
+                    <input placeholder="Min price" onChange={this.filterFormInputChange.bind(this, 'price__gte')} name='price__gte' type="text"/>
+                    <input placeholder="Max price" onChange={this.filterFormInputChange.bind(this, 'price__lte')} name="price__lte" type="text"/>
+                    <input placeholder="Title" onChange={this.filterFormInputChange.bind(this, 'title__icontains')} name="title__icontains" type="text"/>
+                </form>
+
+            </div>
+        )
+    }
 
 
   render() {
@@ -119,6 +145,8 @@ export default class VendorProfileDetail extends BaseComponent {
               Refresh
         </a>
 
+          {this.getFilterForm()}
+          
           <section>
 
             {this.getProductsBlock()}
