@@ -40,6 +40,7 @@ export default class Cart extends Component {
         return (
 
             <div className='cart'>
+                <h3> This is your cart:</h3>
                 {this.getCarts()}
                 {this.getBuyBlock()}
             </div>

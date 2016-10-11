@@ -90,7 +90,7 @@ export default class VendorProfileList extends BaseComponent {
         </a>
 
           <section>
-
+            <h3>Vendors: </h3>
             {this.getVendorProfilesBlock()}
 
 

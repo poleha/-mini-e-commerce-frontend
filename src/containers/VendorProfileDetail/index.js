@@ -135,7 +135,7 @@ export default class VendorProfileDetail extends BaseComponent {
   render() {
 
 
-      return <div ref={(c) => this._post_list = c}>
+      return <div>
 
 
           <a
@@ -149,7 +149,7 @@ export default class VendorProfileDetail extends BaseComponent {
           {this.getFilterForm()}
           
           <section>
-
+              <h3>Products: </h3>
             {this.getProductsBlock()}
               <p className='text-center'>
               {this.getShowMoreInput()}

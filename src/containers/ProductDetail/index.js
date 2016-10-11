@@ -66,6 +66,7 @@ export default class ProductDetail extends BaseComponent {
     }
     
 getCartBlock() {
+    if (this.props.cart.carts == null) return null
     let productId = this.props.product.products.ids;
     let productInCart = false
     for (var key in this.props.cart.carts.entities) {
@@ -97,7 +98,7 @@ getCartBlock() {
  
   render() {
     let product = this.getProduct();
-    if (product == null || this.props.cart.carts == null) return null
+    if (product == null) return null
 
       return <div>
           <div>{product.title}</div>
