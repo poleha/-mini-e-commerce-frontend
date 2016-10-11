@@ -133,7 +133,7 @@ export default class VendorProfileDetail extends BaseComponent {
 
 
   render() {
-
+    let vendorProfile = this.props.vendorProfile.vendorProfiles.entities[this.props.vendorProfile.vendorProfiles.ids]
 
       return <div>
 
@@ -149,6 +149,9 @@ export default class VendorProfileDetail extends BaseComponent {
           {this.getFilterForm()}
           
           <section>
+              <div>{vendorProfile.business_name}</div>
+              <div>{vendorProfile.location}</div>
+              <div>{vendorProfile.description}</div>
               <h3>Products: </h3>
             {this.getProductsBlock()}
               <p className='text-center'>
