@@ -1,6 +1,6 @@
 import {LOAD_VENDOR_PROFILES_START, LOAD_VENDOR_PROFILES_SUCCESS, LOAD_VENDOR_PROFILES_FAIL} from '../constants/VendorProfile'
 import update from 'react-addons-update'
-var vendorProfiles, vendorProfile, key, newState, errors;
+var newState
 
 const initialState = {
     path: null,
@@ -33,7 +33,7 @@ export default function app(state = initialState, action) {
             state = cloneState(state);
 
             newState = update(state, {
-                vendorProfiles: {$set: {entities: action.payload.entities.posts || {}, ids: action.payload.result || []}},
+                vendorProfiles: {$set: {entities: action.payload.entities.vendorProfiles || {}, ids: action.payload.result || []}},
                 count: {$set: action.payload.count},
                 loading: {$set: false},
                 path: {$set: action.path},

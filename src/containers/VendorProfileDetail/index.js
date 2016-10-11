@@ -5,12 +5,13 @@ import {  asyncConnect } from 'redux-async-connect'
 import { mapNodes } from '../../helpers/helper'
 import { bindActionCreators } from 'redux'
 import * as vendorProfileActions from '../../actions/VendorProfileActions'
-import { Link } from 'react-router'
+import * as productActions from '../../actions/ProductActions'
 
 
 function mapStateToProps(state) {
   return {
     vendorProfile: state.vendorProfile,
+    product: state.product,
     logged: state.auth.logged,
     token: state.auth.token,
     userId: state.auth.userId
@@ -19,14 +20,15 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    vendorProfileActions: bindActionCreators(vendorProfileActions, dispatch)
+    vendorProfileActions: bindActionCreators(vendorProfileActions, dispatch),
+    productActions: bindActionCreators(productActions, dispatch)
   };
 }
 
 @asyncConnect([{
   promise: (params, helpers) => {
     let store = params.store;
-    let tag = params.params.tag;
+    let vendorId = params.params.id;
       let loginPromise;
       if (global.loginPromise) {
       loginPromise = global.loginPromise;
@@ -34,27 +36,34 @@ function mapDispatchToProps(dispatch) {
       else {
           loginPromise = Promise.resolve();
       }
-      let currentPromise = loginPromise.then(() => store.dispatch(vendorProfileActions.loadVendorProfiles()));
-      let promises = [];
+
+      let promises = []
+      let currentPromise = loginPromise.then(() => {
+          return store.dispatch(vendorProfileActions.loadVendorProfiles(vendorId));
+      }).then((res) => {
+          return store.dispatch(productActions.loadProducts({user__vendor_profile: vendorId}));
+      });
+
+
     promises.push(currentPromise);
 
     return Promise.all(promises);
   }
 }])
 @connect(mapStateToProps, mapDispatchToProps)
-export default class VendorProfileList extends BaseComponent {
+export default class VendorProfileDetail extends BaseComponent {
 
 
 
 
 
-  loadMorePostsClick(e) {
-    this.props.vendorProfileActions.loadVendorProfiles({limit: this.props.vendorProfile.vendorProfiles.ids.length + 10})
+  loadMoreProductsClick(e) {
+    this.props.productActions.loadProducts({limit: this.props.product.products.ids.length + 30})
 
   }
 
-  refreshPostsClick(e) {
-    this.props.vendorProfileActions.loadVendorProfiles()
+  refreshProductsClick(e) {
+    this.props.productActions.loadProducts()
 
   }
 
@@ -62,36 +71,36 @@ export default class VendorProfileList extends BaseComponent {
 
 
     getShowMoreInput() {
-        let vendorProfiles = this.props.vendorProfile.vendorProfiles;
-        if (vendorProfiles == null) return null;
+        let products = this.props.product.products;
+        if (products == null) return null;
         let showMoreInput;
-        if (this.props.vendorProfile.count > vendorProfiles.ids.length) {
+        if (this.props.product.count > products.ids.length) {
             showMoreInput = (
                 <input
                     onClick={this.loadMorePostsClick.bind(this)}
                     className='button button_middle button_height'
                     type='button'
-                    value='Показать еще'>
+                    value='Show more'>
                 </input>
             )
         }
         return showMoreInput;
     }
 
-    getVendorProfilesBlock() {
-            if (this.props.vendorProfile.loading && this.props.vendorProfile.vendorProfiles === null) return null;
-            let vendorProfiles = this.props.vendorProfile.vendorProfiles;
-            let vendorProfilesBlock = mapNodes(vendorProfiles, function(elem, index){
+    getProductsBlock() {
+            if (this.props.product.loading && this.props.product.products === null) return null;
+            let products = this.props.product.products;
+            let productsBlock = mapNodes(products, function(elem, index){
 
                 return (
                 <div key={elem.id}>
-                    <Link to={'/vendor/' + elem.id}>{ elem.business_name }</Link>
-                </div>
+                { elem.title }
+                </div>    
                 )
 
             }.bind(this));
 
-        return vendorProfilesBlock;
+        return productsBlock;
     }
 
 
@@ -99,20 +108,20 @@ export default class VendorProfileList extends BaseComponent {
   render() {
 
 
-      return <div className='post_list' ref={(c) => this._post_list = c}>
+      return <div ref={(c) => this._post_list = c}>
 
 
           <a
-            onClick={this.refreshPostsClick.bind(this)}
+            onClick={this.refreshProductsClick.bind(this)}
             type='button'
             className='button button_left button_height button_reload button_reload_search'
          >
               Refresh
         </a>
 
-          <section className='cards'>
+          <section>
 
-            {this.getVendorProfilesBlock()}
+            {this.getProductsBlock()}
               <p className='text-center'>
               {this.getShowMoreInput()}
               </p>
