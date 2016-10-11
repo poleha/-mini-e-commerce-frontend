@@ -47,12 +47,6 @@ export default class VendorProfileList extends BaseComponent {
 
 
 
-
-  loadMorePostsClick(e) {
-    this.props.vendorProfileActions.loadVendorProfiles({limit: this.props.vendorProfile.vendorProfiles.ids.length + 10})
-
-  }
-
   refreshPostsClick(e) {
     this.props.vendorProfileActions.loadVendorProfiles()
 
@@ -61,22 +55,7 @@ export default class VendorProfileList extends BaseComponent {
 
 
 
-    getShowMoreInput() {
-        let vendorProfiles = this.props.vendorProfile.vendorProfiles;
-        if (vendorProfiles == null) return null;
-        let showMoreInput;
-        if (this.props.vendorProfile.count > vendorProfiles.ids.length) {
-            showMoreInput = (
-                <input
-                    onClick={this.loadMorePostsClick.bind(this)}
-                    className='button button_middle button_height'
-                    type='button'
-                    value='Показать еще'>
-                </input>
-            )
-        }
-        return showMoreInput;
-    }
+
 
     getVendorProfilesBlock() {
             if (this.props.vendorProfile.loading && this.props.vendorProfile.vendorProfiles === null) return null;
@@ -105,17 +84,15 @@ export default class VendorProfileList extends BaseComponent {
           <a
             onClick={this.refreshPostsClick.bind(this)}
             type='button'
-            className='button button_left button_height button_reload button_reload_search'
+            className='button'
          >
               Refresh
         </a>
 
-          <section className='cards'>
+          <section>
 
             {this.getVendorProfilesBlock()}
-              <p className='text-center'>
-              {this.getShowMoreInput()}
-              </p>
+
 
 </section>
 
@@ -126,13 +103,3 @@ export default class VendorProfileList extends BaseComponent {
 
 
 
-
-//PostList.propTypes = {
-  //year: PropTypes.number.isRequired,
-  //photos: PropTypes.array.isRequired,
-  //setYear: PropTypes.func.isRequired
-//}
-
-//PostList.contextTypes = {
-  //router: PropTypes.object.isRequired
-//}

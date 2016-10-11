@@ -6,6 +6,7 @@ import { mapNodes } from '../../helpers/helper'
 import { bindActionCreators } from 'redux'
 import * as vendorProfileActions from '../../actions/VendorProfileActions'
 import * as productActions from '../../actions/ProductActions'
+import { Link } from 'react-router'
 
 
 function mapStateToProps(state) {
@@ -99,7 +100,7 @@ export default class VendorProfileDetail extends BaseComponent {
 
                 return (
                 <div key={elem.id}>
-                <div>Product: { elem.title }</div>
+                <div>Product: <Link to={'/product/' + elem.id}>{ elem.title }</Link></div>
                 <div>Price: { elem.price }</div>
                 </div>    
                 )

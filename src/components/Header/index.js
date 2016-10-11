@@ -11,27 +11,15 @@ export default class Header extends Component {
         return (
 
             <header className='head'>
-                <div className='head_right'>
-                    {/*
-                    <div className='head_search'>
-                        <form action='/'>
-                            <input type='submit' value=''/>
-                                <div className='input'><input type='text' placeholder='Поиск' required/></div>
-                        </form>
-                    </div>
-                    */}
-
-                    <div className='head_auth'>
+                <Link to={'/'}>Main page</Link>
+                <Link to={'/registration'}>Registration</Link>
 
                         <Auth
                             data={this.props.auth}
                             actions={this.props.authActions}
                         />
 
-                        
-                    </div>
 
-                </div>
             </header>
         )
 

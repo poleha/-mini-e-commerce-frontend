@@ -5,21 +5,25 @@ import { product } from '../schemas'
 const endpoint = apiHost + '/user_products/';
 
 
-export function loadProducts(params) {
+export function loadProducts(params, id) {
     return function (dispatch, getState) {
         let loading = getState().product.loading;
         if (!loading) {
         let urlParams = '';
+
 
             if (params) {
 
                 urlParams = serializeParams(params);
             }
 
+        let currentEndpoint = endpoint;
+        if (id) currentEndpoint += `${id}/`
+
         let action = {
             [API_KEY]: {
                 method: 'get',
-                endpoint: endpoint + '?' + urlParams,
+                endpoint: currentEndpoint + '?' + urlParams,
                 schema: product,
                 actions: [LOAD_PRODUCTS_START, LOAD_PRODUCTS_SUCCESS, LOAD_PRODUCTS_FAIL]
             }

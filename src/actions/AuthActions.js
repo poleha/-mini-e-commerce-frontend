@@ -35,7 +35,7 @@ export function loginUser(userData) {
             else days = '';
 
             createCookie('test_app_token', response.token, days);
-            dispatch(getUserInfo()).then(() => browserHistory.push(location.pathname) );
+            return dispatch(getUserInfo());
         }).catch((error) => {
         });
 
@@ -99,15 +99,16 @@ export function registerUser(data) {
         let action = {
             [API_KEY]: {
                 method: 'post',
-                endpoint: `${endpoint}register/`,
+                endpoint: `${endpoint}/registration/`,
                 actions: [REGISTER_USER_START, REGISTER_USER_SUCCESS, REGISTER_USER_FAIL],
                 body: data
             }
         }
 
         dispatch(action).then(response => {
-            dispatch(loginUser(loginData));
-        }).catch((error) => {
+            dispatch(loginUser(loginData))
+        }).then(() => browserHistory.push('/'))
+            .catch((error) => {
         });
 
     }
