@@ -4,18 +4,21 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {  asyncConnect } from 'redux-async-connect'
 import * as authActions from '../../actions/AuthActions'
+import * as cartActions from '../../actions/CartActions'
 import { getUserInfo } from '../../actions/AuthActions'
 import Header from '../../components/Header'
 
 function mapStateToProps(state) {
     return {
         auth: state.auth,
+        cart: state.cart
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         authActions: bindActionCreators(authActions, dispatch),
+        cartActions: bindActionCreators(cartActions, dispatch),
     }
 }
 
@@ -28,6 +31,7 @@ function mapDispatchToProps(dispatch) {
         if (!state.auth.logged) {
         promises.push(store.dispatch(getUserInfo()))
         }
+
         return Promise.all(promises);
     }
 }])

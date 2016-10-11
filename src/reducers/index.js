@@ -3,6 +3,7 @@ import { routerReducer as routing} from 'react-router-redux'
 import auth from './auth'
 import product from './product'
 import vendorProfile from './vendorProfile'
+import cart from './cart'
 import { reducer as reduxAsyncConnect } from 'redux-async-connect'
 
 export default combineReducers({
@@ -10,5 +11,6 @@ export default combineReducers({
   routing,
   auth,
   vendorProfile,
-  product
+  product,
+  cart
 })

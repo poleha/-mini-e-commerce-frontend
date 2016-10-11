@@ -74,7 +74,7 @@ export default function user(state = initialState, action) {
                 userId: {$set: action.payload.user.id},
                 logged: {$set: true},
                 logging: {$set: false},
-                token: {$set: action.payload.token.auth_token},
+                token: {$set: action.payload.token.key},
                 email: {$set: action.payload.user.email},
 
             });

@@ -163,14 +163,3 @@ export default class VendorProfileDetail extends BaseComponent {
 
 
 
-
-
-//PostList.propTypes = {
-  //year: PropTypes.number.isRequired,
-  //photos: PropTypes.array.isRequired,
-  //setYear: PropTypes.func.isRequired
-//}
-
-//PostList.contextTypes = {
-  //router: PropTypes.object.isRequired
-//}

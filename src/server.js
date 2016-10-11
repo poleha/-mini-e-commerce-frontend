@@ -70,11 +70,11 @@ app.use((req, res) => {
             ReactDOM.renderToStaticMarkup(<Html component={component} store={store}/>));
       }).catch(error => {
         if (__DEVELOPMENT__) res.status(401).send(error.stack);
-        else res.status(401).send('Страница не найдена или у вас нет прав на ее просмотр');
+        else res.status(401).send('Server error');
       });
 
     } else {
-      res.status(404).send('Страница не найдена');
+      res.status(404).send('Page not found');
     }
 
   });

@@ -91,28 +91,6 @@ export default class Product extends BaseComponent {
 
     }
 
-    getShareBlock() {
-
-        /*
-        let post = this.props.post;
-        let title = prepareBody(post.body)
-        let body = removeSmiley(post.body)
-        let url = `http://qblik.ru/post/${post.id}`
-        return (
-        <span 
-            className='ya-share2 card_info_item'
-            data-services='vkontakte,facebook,odnoklassniki,gplus' 
-            data-counter=''
-            data-title={title}
-            data-description={body}
-            data-url={url}
-        >
-            
-        </span>
-        )
-         */
-
-    }
 
     render() {
         let post = this.props.post;
